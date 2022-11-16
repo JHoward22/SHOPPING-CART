@@ -1,3 +1,8 @@
+//Programmer: Jaiden Howard
+//Project Name: Shopping Cart Part 2
+//Date 11/12/2022
+//Description: In this project, you will be focusing on allowing a customer to purchase one of three available items.
+// You will also be authenticating the user’s credentials (username and password) at least once and complete 1 of 5 functions.
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -9,12 +14,14 @@ int main()
 {
     string sku, 
      username,
+     address,
      password, 
-     memberlevel,
+     memberlevel="Gold",
      customername;
-    int quantity;
-    float price;
-// prompt user to enter username and password
+     string yesorno;
+    int quantity, option;
+    float price, rate;
+// prompt user to enter username and password, if invalid Display error message
     cout<< "Enter Username: "<<endl;
     cin>> username;
 
@@ -22,25 +29,34 @@ int main()
     cin>> password;
 
     if( username=="jsmith" && password=="blue123")
-    {// Prompt user to enter sku and quantity if username and password is valid;
+    {// Display Choice Table of items 
       cout << endl << "    SKU      Name         Items in unit    Price per unit  Quantity" << endl;
         cout << "HF-342   1/2 in Bolt       50              20.00            200" << endl;
         cout << "LK-322   1/4 in nail       25              5.75             76" << endl;
         cout << "KF-231   Hammer             1              15.23            100 " << endl;
-       cout<< "Enter sku: ";
-       cin>>sku;
        
     }
 
     else
     {
      cout<< "Username or Password invalid";
-    return 1;
+     return 1;
     }
-    
 
-   // Prompt user to input sku and quantity in order to calculate a price with a 6% sales tax 
-   if (sku == "HF-342")
+// Prompt user to make a selection from the choices listed 1-5
+    cout<<"1 – Purchase an item (make a new purchase)"<<endl;
+    cout<<"2 – View all items (list all items available)"<<endl;
+    cout<<"3 – Get an estimate (estimate the cost for purchasing an item)"<<endl;
+    cout<<"4 – Update Account (update the user information)"<<endl;
+    cout<<"5 – Log Out (exit/end the program)"<<endl;
+    cin>>option;
+// Outcomes for selected option
+    switch(option)
+    {
+        case 1: 
+        cout<< "Enter sku: ";
+        cin>>sku;
+       if (sku == "HF-342")
     {   cout<<"Enter quantity: ";
         cin>>quantity;
      if (quantity<=200)
@@ -72,12 +88,132 @@ int main()
     cout<< "Error: Exceeding store credit.";
     return 1;
     }
-    // Display Customer receipt
-    cout << endl << "======================== Customer Reciept ===============================";
+        break;
+
+        case 2:  
+        cout << endl << "    SKU      Name         Items in unit    Price per unit  Quantity" << endl;
+        cout << "HF-342   1/2 in Bolt       50              20.00            200" << endl;
+        cout << "LK-322   1/4 in nail       25              5.75             76" << endl;
+        cout << "KF-231   Hammer             1              15.23            100 " << endl;
+        cout<<endl;
+        break;
+
+        case 3:cout<< "Enter sku: ";
+        cin>>sku;
+       if (sku == "HF-342")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+     if (quantity<=200)
+     {
+         price=quantity * 20.00;
+     }
+     
+    
+    else if(sku=="LK-322")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+        if (quantity <= 76)
+        {
+            price=quantity * 5.75;
+        }
+    }
+    else if (sku=="KF-231")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+        if (quantity <=100)
+        {
+            price=quantity * 15.23;
+        }
+    }
+
+    if (memberlevel == "Gold" && price>= 300)
+    {
+        cout<<"8.5% Discount applied to purchase. "<<endl;
+        price= price* (1-0.085);
+    }
+    else if (memberlevel =="Gold" && price<300)
+    {
+        cout<<"6% Discount applied to purchase. "<<endl;
+        price= price* (1-0.06);
+    }
+    else if (memberlevel == "Blue" && price>= 100)
+    {
+        cout<<"6% Discount applied to purchase. "<<endl;
+        price= price* (1-0.06);
+    }
+        price=price*(1+0.06);
+    }
+    else if (memberlevel == "Diamond" && price>= 700)
+    {
+        cout<<"12% Discount applied to purchase. "<<endl;
+        price= price* (1-0.012);
+    }
+
+    else if (memberlevel == "Diamond" && price< 700 && price>=300)
+    {
+        cout<<"8.5% Discount applied to purchase. "<<endl;
+        price= price* (1-0.085);
+    }
+    else if (memberlevel =="Diamond" && price<300 && price>=100)
+    {
+        cout<<"6% Discount applied to purchase. "<<endl;
+        price= price* (1-0.06);
+    
+        break;
+    }
+
+        case 4:
+        
+        cout<< "Customer account information"<<endl;
         cout << endl << "Customer's Name: Jane Smith"<< endl;
         cout <<"Account: 123456789" << endl;
-        cout<< "Member Level: Gold"<<endl;
         cout <<"Address: 100 W New Haven Ave, Melbourne, FL 32901"<<endl;
+
+        cout<<"Update Customer Name: Y or N"<<endl;
+        cin>> yesorno;
+
+        if(yesorno=="Y")
+        {
+            cout<<"Enter New Customer Name"<<endl;
+            cin>>customername;
+        }    
+        
+        cout<<"Update Password: Y or N"<<endl;
+        cin>>yesorno;
+        
+        if (yesorno=="Y")
+        {
+            cout<<"Enter New Password"<<endl;
+            cin >> password;
+        }
+ 
+        cout<<"Update Customer Address: Y or N"<<endl;
+        cin>>yesorno;
+        
+        if(yesorno=="Y")
+        {
+            cout<<"Update Customer Address: "<< endl;
+            cin>> address;
+        }
+
+        
+        break;
+
+        case 5:cout<< "Log Out (exit/end the program)"<<endl;
+        return 1;
+
+
+        break;
+    
+    }
+
+   
+    // Display Customer receipt
+    cout << endl << "======================== Customer Reciept ===============================";
+        cout << endl << "Customer's Name: "<<"Jane Smith"<< endl;
+        cout <<"Account: 123456789" << endl;
+        cout<< "Member Level: Gold"<<endl;
+        cout <<"Address: "<<" 100 W New Haven Ave, Melbourne, FL 32901"<<endl;
         cout<< "Remaing Store Credit: " << (3000-price)<<endl;
         //==========================================================
         // Item Purchased
