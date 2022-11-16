@@ -5,126 +5,95 @@
 using namespace std;
 
 int main()
+// declare variables
 {
-    //Begin
-   
-    //Declare Variables
-    
-        string first_name = "Jane", last_name = "Smith", username = "jsmith", password = "blue123", usern, pass;
-        char sku;
-        bool boughtHF = false, boughtLK = false, boughtKF = false;
-        float  credit = 3000.00, cart = 0.00;
-        int qbolt = 0, qnail = 0, qhammer = 0;
-    
-//Prompt user for input
+    string sku, 
+     username,
+     password, 
+     memberlevel,
+     customername;
+    int quantity;
+    float price;
+// prompt user to enter username and password
+    cout<< "Enter Username: "<<endl;
+    cin>> username;
 
-        cout << "Enter username:  ";
-        cin >> usern;
-        cout << "Enter password:  ";
-        cin >>  pass;
+    cout<< "Enter Password: "<< endl;
+    cin>> password;
 
-        while (usern != username || pass != password)
-        {
-        cout << endl << "Incorrect username or password. try again.\n";
-
-        cout << "Enter username::  ";
-        cin >> usern;
-        cout << "Enter password: ";
-        cin >> pass;
-        }
-
-//create choice table
-        cout << endl << "    SKU      Name         Items in unit    Price per unit  Quantity" << endl;
-        cout << "1. HF-342   1/2 in Bolt       50              20.00         200" << endl;
-        cout << "2. LK-322   1/4 in nail       25              5.75          76" << endl;
-        cout << "3. KF-231   Hammer             1              15.23         100 " << endl;
-    
-    cout << endl << "Enter Choice 1,2, or 3: ";
-    cin >> sku;
-
-    switch(sku)
-    {
-    case '1':
-        cout << "How many 1/2 bolts would you like to purchase?";
-        cin >> qbolt;
-        cart += (20.00 * qbolt * 1.06);
-
-        while (qbolt > 200 || credit < cart) // Verifies the amount selected is within range for quantity and price.
-        {
-            if (qbolt > 200)
-            {cout << "Error! Please enter a new number of quantity: "; cin >> qbolt;}
-
-            if(credit < cart)
-            {cout << "Price exceeds your store credit amount. enter new quantity. :"; cin >> qbolt;}
-        }
-        
-        credit = credit - cart;
-        boughtHF = true;
-    break;
-
-    case '2':
-        cout << "How many 1/4 nails would you like to purchase: ";
-        cin >> qnail;
-            cart += (5.75 * qnail * 1.06);
-
-        while (qnail > 76 || credit < cart)
-        {
-            if (qnail > 76)
-            {
-            cout << "Error! enter a new number of quantity : "; cin >> qnail;
-            }
-            if (credit< cart)
-            {
-            cout << "Price exceeds your store credit amount. enter new quantity. :"; cin >> qnail;
-            }
-        }
-            
-        credit = credit - cart;
-        boughtLK = true;
-    break;
-
-
-    case '3':
-        cout << "How many hammers would you like to purchase?";
-        cin >> qhammer;
-            cart += (15.23 * qhammer * 1.06);
-
-        while (qhammer > 76 || credit < cart)
-        {
-            if (qhammer > 76)
-            {cout << "Error!Please enter a new number of quantity : "; cin >> qhammer;}
-            
-            if (credit < cart)
-            cout << "Price exceeds your store credit amount. enter new quantity. :"; cin >> qhammer;
-        }
-
-        credit = credit - cart;
-
-        boughtKF = true;
-    break;
-
-    default:
-    cout << "\n BAD MENU CHOICE\n";
-    break;
+    if( username=="jsmith" && password=="blue123")
+    {// Prompt user to enter sku and quantity if username and password is valid;
+      cout << endl << "    SKU      Name         Items in unit    Price per unit  Quantity" << endl;
+        cout << "HF-342   1/2 in Bolt       50              20.00            200" << endl;
+        cout << "LK-322   1/4 in nail       25              5.75             76" << endl;
+        cout << "KF-231   Hammer             1              15.23            100 " << endl;
+       cout<< "Enter sku: ";
+       cin>>sku;
+       
     }
 
-  // print receipt
-    cout << endl << "Customer Reciept";
-        cout << endl << "Customer's Name: " + first_name + " " + last_name << endl;
-        cout << "Account: 123456789" << endl;
-        
-        // Item Purchased
-        
-            if(boughtHF)
-            {cout << "Purchased " << qbolt << " 1/2 inch Bolts\n";}
-
-            if(boughtLK)
-            {cout << "Purchased " << qnail << " 1/2 inch Nails\n";}
-
-            if(boughtKF)
-            {cout << "Purchased " << qhammer << " Hammers\n";}
+    else
+    {
+     cout<< "Username or Password invalid";
+    return 1;
+    }
     
-        cout << "Total Price: " << fixed << showpoint << setprecision(2) << cart << endl;
-        cout << "Credit Balance: " << fixed << showpoint << setprecision(2) << credit << endl;
+
+   // Prompt user to input sku and quantity in order to calculate a price with a 6% sales tax 
+   if (sku == "HF-342")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+     if (quantity<=200)
+     {
+         price=quantity * 20.00;
+     }
+     
+    }
+    else if(sku=="LK-322")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+        if (quantity <= 76)
+        {
+            price=quantity * 5.75;
+        }
+    }
+    else if (sku=="KF-231")
+    {   cout<<"Enter quantity: ";
+        cin>>quantity;
+        if (quantity <=100)
+        {
+            price=quantity * 15.23;
+        }
+    }
+    price=price*(1+0.06);
+    
+    if (price>3000.00)
+    {
+    cout<< "Error: Exceeding store credit.";
+    return 1;
+    }
+    // Display Customer receipt
+    cout << endl << "======================== Customer Reciept ===============================";
+        cout << endl << "Customer's Name: Jane Smith"<< endl;
+        cout <<"Account: 123456789" << endl;
+        cout<< "Member Level: Gold"<<endl;
+        cout <<"Address: 100 W New Haven Ave, Melbourne, FL 32901"<<endl;
+        cout<< "Remaing Store Credit: " << (3000-price)<<endl;
+        //==========================================================
+        // Item Purchased
+        //==========================================================
+            if (sku == "HF-342")
+            {cout << "Purchased " << quantity << " 1/2 inch Bolts\n";}
+
+            else if(sku=="LK-322")
+            {cout << "Purchased " << quantity << " 1/2 inch Nails\n";}
+
+            else if (sku=="KF-231")
+            {cout << "Purchased " << quantity << " Hammers\n";}
+        //===========================================================
+        //===========================================================
+       
+    
+
 return 0;
 }
