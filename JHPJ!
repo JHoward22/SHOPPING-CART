@@ -159,9 +159,9 @@ int main()
         cout<<"6% Discount applied to purchase. "<<endl;
         price= price* (1-0.06);
     
-        break;
+      
     }
-
+        break;
         case 4:
         
         cout<< "Customer account information"<<endl;
